@@ -127,6 +127,12 @@
       font-weight: bold;
     }
 
+    .card ul li.excluded-feature::before {
+      content: '✕'; /* Unicode HEAVY MULTIPLICATION X */
+      color: #ff7777; /* A slightly desaturated red, less harsh than pure red */
+      font-weight: bold; /* Ensure the X is visually strong */
+    }
+
 
     .animate-in {
       opacity: 0;
@@ -402,8 +408,8 @@
           <li>Dealing with HMRC letters</li>
           <li>Tax advice</li>
           <li>Tailored to support your business needs</li>
-          <li>30-min Private Banker vid calls/month (inclusive of Financial Planning & Analysis and Capital Strategy consulting)</li>
-          <li>Virtual CFO - Access your own dedicated & experienced chartered accountant for advice (via email/text)</li>
+          <li class="excluded-feature">30-min Private Banker vid calls/month (inclusive of Financial Planning & Analysis and Capital Strategy consulting)</li>
+          <li class="excluded-feature">Virtual CFO - Access your own dedicated & experienced chartered accountant for advice (via email/text)</li>
         </ul>
         <a href="#" class="btn" style="margin-top: auto;">Choose Plan</a>
       </div>
