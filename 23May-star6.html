@@ -17,6 +17,14 @@
       color: #ffffff;
     }
 
+    p { /* Task A: Global Paragraph Styling */
+      line-height: 1.6;
+    }
+
+    section > h2 { /* Task B: Section Heading Consistency */
+      margin-bottom: 2.5rem;
+    }
+
     body {
       background: #010102; 
       overflow-x: hidden;
@@ -198,7 +206,7 @@
     .mission { background-color: #1a1a1a; padding: 4rem 2rem; text-align: center;}
     .pricing { padding: 4rem 2rem; text-align: center; background-color: #010102; }
     .faq { background-color: #101013; padding: 4rem 2rem; text-align: center;}
-    footer { background-color: #1a1a1a; padding: 2rem; text-align: center; opacity: 0.6;}
+    footer { background-color: #1a1a1a; padding: 2rem; text-align: center; opacity: 0.8;} /* Task D: Footer Opacity */
 
     .featured-in img {
       height: 40px;
@@ -300,14 +308,11 @@
     <a href="#pricing" class="btn">Get Started</a>
   </section>
   
-  <section id="featured-in" class="featured-in scroll-animate">
-    <h2>Featured In</h2>
-    <div>
-      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Tax+Journal" alt="Tax Journal"> -->
-      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Accountancy+Age" alt="Accountancy Age"> -->
-      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Crypto+News" alt="Crypto News"> -->
-      <!-- Placeholder for actual client logos -->
-    </div>
+  <section id="consultation-booking" class="scroll-animate" style="text-align: center; padding: 4rem 2rem; background-color: #010102;">
+    <h2 style="margin-bottom: 2.5rem;">Book Your Consultation</h2>
+    <!-- Google Calendar Appointment Scheduling begin -->
+    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1PhBqLFpaUdk0CTeILr7DVH3HnZuPaDhfOkFvHy7epmll8D1V7mU7mN7f_aMqvA4ndErQNYXvJ?gv=true" style="border: 0; max-width: 1000px; width: 100%;" height="600" frameborder="0"></iframe>
+    <!-- end Google Calendar Appointment Scheduling -->
   </section>
 
   <section id="testimonials" class="testimonials scroll-animate">
@@ -375,11 +380,6 @@
         <h3>HMRC Compliance</h3>
         <p>Ensure full compliance with the latest UK tax regulations and HMRC guidelines.</p>
       </div>
-      <div class="card">
-        <i class="ph-phone-call-light ph-2x" style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #00ccff;"></i>
-        <h3>Consultation Call</h3>
-        <p>30 mins - $99</p>
-        <a href="#" class="btn" style="margin-top: auto;">Book Now</a> </div>
     </div>
   </section>
 
