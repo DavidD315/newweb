@@ -53,6 +53,12 @@
       opacity: 1;
     }
 
+    nav .logo a {
+        color: #ffffff; /* Assuming white is the desired color like other text */
+        text-decoration: none;
+        opacity: 1; /* Ensure it's fully opaque, or adjust if needed */
+    }
+
     .burger {
       display: none;
       cursor: pointer;
@@ -261,7 +267,7 @@
 </head>
 <body>
   <nav>
-    <div class="logo">Nomads Accounting</div>
+    <div class="logo"><a href="#hero">Nomads Accounting</a></div>
     <ul>
       <li><a href="#hero">Home</a></li>
       <li><a href="#featured-in">Featured</a></li>
@@ -272,8 +278,8 @@
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <div class="burger"><i class="ph-list"></i></div>
-    <div class="mobile-menu">
+    <div class="burger" id="mobileMenuButton" role="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavMenu"><i class="ph-list"></i></div>
+    <div class="mobile-menu" id="mobileNavMenu">
       <ul>
         <li><a href="#hero">Home</a></li>
         <li><a href="#featured-in">Featured</a></li>
@@ -297,9 +303,10 @@
   <section id="featured-in" class="featured-in scroll-animate">
     <h2>Featured In</h2>
     <div>
-      <img src="https://placehold.co/150x40/333333/FFFFFF?text=Tax+Journal" alt="Tax Journal">
-      <img src="https://placehold.co/150x40/333333/FFFFFF?text=Accountancy+Age" alt="Accountancy Age">
-      <img src="https://placehold.co/150x40/333333/FFFFFF?text=Crypto+News" alt="Crypto News">
+      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Tax+Journal" alt="Tax Journal"> -->
+      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Accountancy+Age" alt="Accountancy Age"> -->
+      <!-- <img src="https://placehold.co/150x40/333333/FFFFFF?text=Crypto+News" alt="Crypto News"> -->
+      <!-- Placeholder for actual client logos -->
     </div>
   </section>
 
@@ -389,7 +396,7 @@
         <p style="font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem;">$399</p>
         <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1.5rem;">Per month</p>
         <ul>
-          <li>Company accounts and tax returns produced and submitted to HMRC ad companies house</li>
+          <li>Company accounts and tax returns produced and submitted to HMRC and Companies House</li>
           <li>VAT returns (where applicable)</li>
           <li>Payroll for employees</li>
           <li>Management reports</li>
@@ -407,7 +414,7 @@
         <p style="font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem;">$599</p>
         <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1.5rem;">Per month</p>
         <ul>
-          <li>Company accounts and tax returns produced and submitted to HMRC ad companies house</li>
+          <li>Company accounts and tax returns produced and submitted to HMRC and Companies House</li>
           <li>VAT returns (where applicable)</li>
           <li>Payroll for employees</li>
           <li>Management reports</li>
@@ -416,7 +423,7 @@
           <li>Tax advice</li>
           <li>Tailored to support your business needs</li>
           <li>30-min Private Banker vid calls/month (inclusive of Financial Planning & Analysis and Capital Strategy consulting)</li>
-          <li>Virtual CFO - Access your own dedicated & experienced chartered accountant for advice (via email/text) Tailored to support your business needs</li>
+          <li>Virtual CFO - Access your own dedicated & experienced chartered accountant for advice (via email/text)</li>
         </ul>
         <a href="#" class="btn" style="margin-top: auto;">Choose Plan</a>
       </div>
@@ -425,7 +432,7 @@
         <p style="font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem;">$1999</p>
         <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1.5rem;">Per month</p>
         <ul>
-          <li>Company accounts and tax returns produced and submitted to HMRC ad companies house</li>
+          <li>Company accounts and tax returns produced and submitted to HMRC and Companies House</li>
           <li>VAT returns (where applicable)</li>
           <li>Payroll for employees</li>
           <li>Management reports</li>
@@ -467,19 +474,23 @@
 
   <script>
     // Mobile menu toggle
-    const burger = document.querySelector('.burger');
-    const mobileMenu = document.querySelector('.mobile-menu');
+    const burgerButton = document.getElementById('mobileMenuButton'); // Use ID selector
+    const mobileMenu = document.getElementById('mobileNavMenu'); // Use ID selector
     const navLinks = document.querySelectorAll('.mobile-menu a'); 
 
-    burger.addEventListener('click', () => {
+    burgerButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('active');
-      const icon = burger.querySelector('i');
+      const icon = burgerButton.querySelector('i');
       if (mobileMenu.classList.contains('active')) {
         icon.classList.remove('ph-list');
         icon.classList.add('ph-x');
+        burgerButton.setAttribute('aria-expanded', 'true');
+        burgerButton.setAttribute('aria-label', 'Close menu');
       } else {
         icon.classList.remove('ph-x');
         icon.classList.add('ph-list');
+        burgerButton.setAttribute('aria-expanded', 'false');
+        burgerButton.setAttribute('aria-label', 'Open menu');
       }
     });
 
@@ -487,9 +498,11 @@
       link.addEventListener('click', () => {
         if (mobileMenu.classList.contains('active')) {
           mobileMenu.classList.remove('active');
-          const icon = burger.querySelector('i');
+          const icon = burgerButton.querySelector('i'); // Ensure icon updates correctly
           icon.classList.remove('ph-x');
           icon.classList.add('ph-list');
+          burgerButton.setAttribute('aria-expanded', 'false');
+          burgerButton.setAttribute('aria-label', 'Open menu');
         }
       });
     });
@@ -517,7 +530,7 @@
     let starVelocities, starBaseSizes; 
     let mainCoinRadius; 
     let starCount; 
-    let starSpreadX, starSpreadY, starSpreadZ; 
+    let starSpreadX, starSpreadY, starSpreadZ; // Declarations remain global
 
 
     // Function to create a texture with a currency symbol
@@ -552,6 +565,16 @@
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.35; 
         hologramContainer.appendChild(renderer.domElement); 
+
+        // ---- START MOVED/MODIFIED SECTION ----
+        // Ensure hologramContainer is valid and has dimensions before calculating spread
+        const heroWidth = hologramContainer.clientWidth || window.innerWidth; 
+        const heroHeight = hologramContainer.clientHeight || window.innerHeight;
+        
+        starSpreadX = Math.max(heroWidth / 30, 20); 
+        starSpreadY = Math.max(heroHeight / 30, 15);
+        starSpreadZ = Math.max(Math.min(starSpreadX, starSpreadY) * 0.6, 10);
+        // ---- END MOVED/MODIFIED SECTION ----
 
         currencySymbols.forEach(symbol => {
             const bgColors = [ 
@@ -735,11 +758,11 @@
         }
 
         starCount = 3500; 
-        const heroWidth = hologramContainer.clientWidth || window.innerWidth; 
-        const heroHeight = hologramContainer.clientHeight || window.innerHeight;
-        starSpreadX = Math.max(heroWidth / 30, 20); 
-        starSpreadY = Math.max(heroHeight / 30, 15);
-        starSpreadZ = Math.max(Math.min(starSpreadX, starSpreadY) * 0.6, 10);
+        // const heroWidth = hologramContainer.clientWidth || window.innerWidth; // Moved up
+        // const heroHeight = hologramContainer.clientHeight || window.innerHeight; // Moved up
+        // starSpreadX = Math.max(heroWidth / 30, 20); // Moved up
+        // starSpreadY = Math.max(heroHeight / 30, 15); // Moved up
+        // starSpreadZ = Math.max(Math.min(starSpreadX, starSpreadY) * 0.6, 10); // Moved up
 
 
         const starPositions = new Float32Array(starCount * 3);
