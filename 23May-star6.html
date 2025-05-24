@@ -599,41 +599,24 @@
 
         const starMaterial = new THREE.ShaderMaterial({
             uniforms: {
-                pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png') },
-                time: { value: 0.0 } // Add this time uniform
+                // pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png') }, // Commented out
+                // time: { value: 0.0 } // Comment this out
             },
             vertexShader: `
                 attribute float size;
                 varying vec3 vColor;
                 void main() {
-                    vColor = color;
+                    vColor = color; // Pass color through
                     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                    gl_PointSize = size * (300.0 / -mvPosition.z); // Size attenuation
+                    gl_PointSize = size * (300.0 / -mvPosition.z); // Basic size attenuation
+                    // For extreme debugging, could try fixed size: gl_PointSize = 5.0;
                     gl_Position = projectionMatrix * mvPosition;
                 }
             `,
             fragmentShader: `
-                uniform sampler2D pointTexture;
                 varying vec3 vColor;
-
-                // Basic pseudo-random function (if needed in FS, otherwise can be removed if only FS uses it)
-                // float rand(vec2 co){
-                //    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-                // }
-
-                float pseudoRandom(vec3 seed) {
-                    return fract(sin(dot(seed.xyz, vec3(12.9898, 78.233, 45.543))) * 43758.5453123);
-                }
-
                 void main() {
-                    float baseAlpha = texture2D(pointTexture, gl_PointCoord).a;
-                    
-                    // Simple twinkle based on a pseudo-random value derived from vColor (which is somewhat unique per particle)
-                    // and time.
-                    float randomFactor = pseudoRandom(vColor + vec3(0.1,0.2,0.3)); // Offset vColor to ensure it's not zero
-                    float twinkleValue = 0.7 + 0.3 * sin(time * (1.0 + randomFactor * 2.0) + randomFactor * 6.28318); // Modulate between 0.7 and 1.0
-                    
-                    gl_FragColor = vec4(vColor, baseAlpha * twinkleValue);
+                    gl_FragColor = vec4(vColor, 1.0); // Output vertex color, no texturing
                 }
             `,
             blending: THREE.AdditiveBlending,
@@ -647,14 +630,14 @@
         scene.add(galaxyParticles);
 
         // Nebulosity
-        const nebulaTextureUrl = 'https://threejs.org/examples/textures/clouds.png';
-        const nebulaTexture = new THREE.TextureLoader().load(nebulaTextureUrl);
-        nebulaTexture.wrapS = THREE.RepeatWrapping;
-        nebulaTexture.wrapT = THREE.RepeatWrapping;
-        nebulaTexture.repeat.set(1, 1);
+        // const nebulaTextureUrl = 'https://threejs.org/examples/textures/clouds.png';
+        // const nebulaTexture = new THREE.TextureLoader().load(nebulaTextureUrl);
+        // nebulaTexture.wrapS = THREE.RepeatWrapping;
+        // nebulaTexture.wrapT = THREE.RepeatWrapping;
+        // nebulaTexture.repeat.set(1, 1);
 
         const nebulaMaterial = new THREE.MeshBasicMaterial({
-            map: nebulaTexture,
+            // map: nebulaTexture, // Commented out for debugging
             color: new THREE.Color(0.3, 0.2, 0.5), // Purplish hue
             transparent: true,
             opacity: 0.12, // Slightly increased opacity
@@ -663,19 +646,19 @@
             side: THREE.DoubleSide
         });
 
-        const nebulaPlane1 = new THREE.Mesh(new THREE.PlaneGeometry(galaxyRadius * 3, galaxyRadius * 3), nebulaMaterial);
-        nebulaPlane1.rotation.x = Math.PI / 2;
-        nebulaPlane1.position.y = -galaxyThickness * 0.5;
-        scene.add(nebulaPlane1);
+        // const nebulaPlane1 = new THREE.Mesh(new THREE.PlaneGeometry(galaxyRadius * 3, galaxyRadius * 3), nebulaMaterial);
+        // nebulaPlane1.rotation.x = Math.PI / 2;
+        // nebulaPlane1.position.y = -galaxyThickness * 0.5;
+        // scene.add(nebulaPlane1); // Commented out for debugging
 
-        const nebulaMaterial2 = nebulaMaterial.clone();
-        nebulaMaterial2.color.setRGB(0.2, 0.3, 0.6); // Bluish hue
-        nebulaMaterial2.opacity = 0.09; // Slightly increased opacity
-        const nebulaPlane2 = new THREE.Mesh(new THREE.PlaneGeometry(galaxyRadius * 2.5, galaxyRadius * 2.5), nebulaMaterial2);
-        nebulaPlane2.rotation.x = Math.PI / 2.2;
-        nebulaPlane2.position.y = galaxyThickness * 0.3;
-        nebulaPlane2.position.z = -5;
-        scene.add(nebulaPlane2);
+        // const nebulaMaterial2 = nebulaMaterial.clone();
+        // nebulaMaterial2.color.setRGB(0.2, 0.3, 0.6); // Bluish hue
+        // nebulaMaterial2.opacity = 0.09; // Slightly increased opacity
+        // const nebulaPlane2 = new THREE.Mesh(new THREE.PlaneGeometry(galaxyRadius * 2.5, galaxyRadius * 2.5), nebulaMaterial2);
+        // nebulaPlane2.rotation.x = Math.PI / 2.2;
+        // nebulaPlane2.position.y = galaxyThickness * 0.3;
+        // nebulaPlane2.position.z = -5;
+        // scene.add(nebulaPlane2); // Commented out for debugging
     }
 
 
@@ -684,9 +667,11 @@
         requestAnimationFrame(animate);
         
         if (galaxyParticles) {
-            if (galaxyParticles.material.uniforms.time) { // Check if time uniform exists
-                 galaxyParticles.material.uniforms.time.value = Date.now() * 0.0005; // Update time
-            }
+            // if (galaxyParticles.material.uniforms.time) { // The 'time' uniform might not exist now
+            //     galaxyParticles.material.uniforms.time.value = Date.now() * 0.0005; 
+            // }
+            // Ensure the line below is also commented out or removed if time uniform is removed
+            // galaxyParticles.material.uniforms.time.value = Date.now() * 0.0005; // Update time
             galaxyParticles.rotation.y += 0.0001; // Very slow rotation
         }
         // Nebula animation could be added here
